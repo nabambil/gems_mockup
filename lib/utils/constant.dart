@@ -14,3 +14,7 @@ const String routeCheckIn = "ROUTE_CHECKIN";
 const String routeCheckOut = "ROUTE_CHECKOUT";
 const String routeMaterialInfo = "ROUTE_MATERIAL_INFO";
 const String routeRegisterItem = "ROUTE_REGISTER_ITEM";
+const String routePurchaseRequest = "ROUTE_PURCHASE_REQUEST";
+const String routeMateralRequest = "ROUTE__MATERIAL_REQUEST";
+const String routePurchaseOrder = "ROUTE_PURCHASE_ORDER";
+const String routeProcurement = "ROUTE_PROCUREMENT";

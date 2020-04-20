@@ -23,7 +23,6 @@ class BlocInventory extends Bloc {
   Stream get stock$ => _myStock.stream;
 
   Function get setSelected => _selectedFilter.sink.add;
-  Function get setMaterial => _selectedFilter.sink.add;
   Function get setView => _myView.sink.add;
 
   BlocInventory(){

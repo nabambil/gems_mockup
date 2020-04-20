@@ -37,7 +37,7 @@ class MyStock extends StatelessWidget {
     );
   }
 
-  Widget text(title, number) {
+  Widget text(title, number,{ bool hero = false}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

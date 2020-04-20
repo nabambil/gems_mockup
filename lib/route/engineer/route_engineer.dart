@@ -121,10 +121,10 @@ class _ListView extends StatefulWidget {
   _ListView(this.items, this.bloc);
 
   @override
-  __ListViewState createState() => __ListViewState();
+  _ListViewState createState() => _ListViewState();
 }
 
-class __ListViewState extends State<_ListView> {
+class _ListViewState extends State<_ListView> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -218,10 +218,7 @@ class _FloatingButton extends StatelessWidget {
       );
 
   void submitPressed(BuildContext context) {
-    if (bloc.type == ScreenType.forTechnician) {
-      bloc.type = ScreenType.forEngineer;
-      Navigator.pushReplacementNamed(context, routeTechnician, arguments: bloc);
-    }
+      Navigator.pushNamed(context, routeInventory);
   }
 
   void rejectPressed(BuildContext context) {

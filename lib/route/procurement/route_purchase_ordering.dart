@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mockup_gems/utils/bloc/bloc_inventory.dart';
+import 'package:mockup_gems/utils/bloc/bloc_procurement.dart';
 import 'package:mockup_gems/utils/constant.dart';
 
-class TaskList extends StatelessWidget {
+class PurchaseOrderList extends StatelessWidget {
+  final BlocProcurement bloc;
 
-  final BlocInventory bloc;
-  TaskList(this.bloc);
+  PurchaseOrderList(this.bloc);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class TaskList extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.only(top: 12, bottom: 12),
       itemBuilder: (ctx, index) => _Tile(snapshot.data != "All Status" ? snapshot.data : statuses[index+1], index),
-      itemCount: snapshot.data != "All Status" ? 1 : statuses.length - 1 ,
+      itemCount: snapshot.data != "All Status" ? 1: statuses.length - 1 ,
       separatorBuilder: (ctx, index) => Divider(),
     ),);
   }
@@ -29,15 +29,15 @@ class _Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text("MR00031", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text("PR00123", style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle:
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          text(value: "Mohd Syafiq", top: 8.0),
+          text(value: "Sharif Ishak", top: 8.0),
           text(value: "2 / 2 / 2020"),
-          text(value: "WO00045"),
+          text(value: "Store A"),
         ]),
         trailing: state, onTap: (){
-          Navigator.pushNamed(context, routeMateralRequest, arguments: status);
+          // Navigator.pushNamed(context, routeMateralRequest, arguments: status);
         },);
   }
 
@@ -68,5 +68,5 @@ class _Tile extends StatelessWidget {
     );
   }
 
-  Color get colors => [colorTheme1, colorTheme4, colorTheme2, colorTheme5, colorTheme3][index];
+  Color get colors => [colorTheme4, colorTheme1][index];
 }

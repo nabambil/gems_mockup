@@ -146,12 +146,12 @@ class _Header extends StatelessWidget {
         children: <Widget>[
           _DropdownFilter(bloc),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, routePurchaseRequest),
             child: Row(
               children: <Widget>[
                 Icon(Icons.send, color: Colors.white),
                 SizedBox(width: 6),
-                Text("1",
+                Text("10",
                     style: TextStyle(color: Colors.white, fontSize: 16)),
               ],
             ),
