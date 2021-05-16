@@ -18,3 +18,4 @@ const String routePurchaseRequest = "ROUTE_PURCHASE_REQUEST";
 const String routeMateralRequest = "ROUTE__MATERIAL_REQUEST";
 const String routePurchaseOrder = "ROUTE_PURCHASE_ORDER";
 const String routeProcurement = "ROUTE_PROCUREMENT";
+const String routeDashboard = "ROUTE_DASHBOARD";
