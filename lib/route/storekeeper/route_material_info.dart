@@ -19,10 +19,10 @@ class MaterialInfo extends StatelessWidget {
               title: text(material.name, material.quantity.toString()),
               children: [
                 expandedView(material),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: threshold(material),
-                ),
+                TextButton(
+                  child: Text("View Details"),
+                  onPressed: () => Navigator.pushNamed(context, routeDetails),
+                )
               ]);
         },
         itemCount: value.materials.length,
@@ -30,28 +30,6 @@ class MaterialInfo extends StatelessWidget {
       ),
     );
   }
-
-  Widget threshold(bloc.Material value) => StreamBuilder(
-        stream: value.threshold,
-        builder: (ctx, snapshot) => Row(
-          children: <Widget>[
-            Text("Set Threshold : ", style: TextStyle(color: colorTheme4),),
-            IconButton(
-                icon: Icon(Icons.remove, color: Colors.grey),
-                onPressed: () => snapshot.data != 0  ? value.minusThreshold : null),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                snapshot.data.toString(),
-                style: TextStyle(fontSize: 20, color: colorTheme4),
-              ),
-            ),
-            IconButton(
-                icon: Icon(Icons.add, color: Colors.grey),
-                onPressed: () => value.addThreshold),
-          ],
-        ),
-      );
 
   Widget text(title, number) {
     return Row(
@@ -72,10 +50,10 @@ class MaterialInfo extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(material.issuedBy),
-          SizedBox(height:6),
+          SizedBox(height: 6),
           Text(material.desc ?? "No description"),
         ],
       ),
     );
-  }  
+  }
 }

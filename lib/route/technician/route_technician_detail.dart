@@ -26,10 +26,13 @@ class _RouteTechnicianDetailState extends State<RouteTechnicianDetail> {
       _bloc.setQuantity(item.quantity.toString());
     }
 
-    _bloc.loadingState.listen((value){
-      if (value == true) 
-        showDialog(context: context, child:Center(child: CircularProgressIndicator()));
-      else 
+    _bloc.loadingState.listen((value) {
+      if (value == true)
+        showDialog(
+          context: context,
+          builder: (_) => Center(child: CircularProgressIndicator()),
+        );
+      else
         Navigator.pop(context);
     });
   }
@@ -53,9 +56,9 @@ class _RouteTechnicianDetailState extends State<RouteTechnicianDetail> {
           padding: const EdgeInsets.all(16.0),
           child: Column(children: [
             _Dropdown(_bloc.groups, _bloc.setGroup, _bloc.group, "Group"),
-            SizedBox(height:8),
+            SizedBox(height: 8),
             _Dropdown(_bloc.subs, _bloc.setSubGroup, _bloc.sub, "Sub Group"),
-            SizedBox(height:8),
+            SizedBox(height: 8),
             _Dropdown(_bloc.items, _bloc.setItem, _bloc.item, "Item"),
             _Quantity(_bloc),
             _Description(_bloc),
@@ -79,18 +82,23 @@ class _Dropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return streaming<List<String>>(
       subscribe,
-      (listValue) => 
-      streaming<String>(
+      (listValue) => streaming<String>(
         listen,
         (selectedValue) {
           if (listValue == null && label != "Group")
             return TextField(
-              decoration: InputDecoration(labelText: label, suffixIcon: Icon(Icons.arrow_drop_down)),
+              decoration: InputDecoration(
+                  labelText: label, suffixIcon: Icon(Icons.arrow_drop_down)),
               enabled: false,
             );
 
           return SearchableDropdown.single(
-            items: (listValue ?? ["select one"]).map<DropdownMenuItem<String>>((f) => DropdownMenuItem(child: Text(f), value: f,)).toList(),
+            items: (listValue ?? ["select one"])
+                .map<DropdownMenuItem<String>>((f) => DropdownMenuItem(
+                      child: Text(f),
+                      value: f,
+                    ))
+                .toList(),
             value: selectedValue,
             label: label,
             hint: "Please select one $label",
@@ -110,7 +118,8 @@ class _Dropdown extends StatelessWidget {
         //   return builder(snapshot.data);
         if (snapshot.data == null && snapshot.error != null)
           return TextField(
-            decoration: InputDecoration(labelText: label, suffixIcon: Icon(Icons.arrow_drop_down)),
+            decoration: InputDecoration(
+                labelText: label, suffixIcon: Icon(Icons.arrow_drop_down)),
             enabled: false,
           );
 
@@ -128,7 +137,9 @@ class _Quantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        controller: bloc.quantity != null ? TextEditingController(text: bloc.quantity.toString()) : null,
+        controller: bloc.quantity != null
+            ? TextEditingController(text: bloc.quantity.toString())
+            : null,
         decoration: InputDecoration(labelText: 'Quantity'),
         keyboardType: TextInputType.number,
         onChanged: bloc.setQuantity);
@@ -143,7 +154,8 @@ class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        controller: bloc.desc != null ? TextEditingController(text: bloc.desc) : null,
+        controller:
+            bloc.desc != null ? TextEditingController(text: bloc.desc) : null,
         decoration: InputDecoration(labelText: 'Description'),
         keyboardType: TextInputType.multiline,
         maxLength: 100,
@@ -159,11 +171,18 @@ class _FloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(stream: bloc.verifySubmittion, builder: (context,snapshot) => FloatingActionButton.extended(
-      heroTag: "submit",
-      label: Text("Submit"),
-      backgroundColor: colorTheme3,
-      onPressed: () => snapshot.data == null ? Toast.show("Please fill all dropdown",context, duration: 3) : snapshot.data == false ? Toast.show("Please fill all dropdown",context, duration: 3) : Navigator.pop(context, bloc.itemValue),
-    ));
+    return StreamBuilder(
+        stream: bloc.verifySubmittion,
+        builder: (context, snapshot) => FloatingActionButton.extended(
+              heroTag: "submit",
+              label: Text("Submit"),
+              backgroundColor: colorTheme3,
+              onPressed: () => snapshot.data == null
+                  ? Toast.show("Please fill all dropdown", context, duration: 3)
+                  : snapshot.data == false
+                      ? Toast.show("Please fill all dropdown", context,
+                          duration: 3)
+                      : Navigator.pop(context, bloc.itemValue),
+            ));
   }
 }

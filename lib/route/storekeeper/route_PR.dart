@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mockup_gems/utils/bloc/bloc_technician.dart';
 import 'package:mockup_gems/utils/constant.dart';
+import 'package:toast/toast.dart';
 
 class PurchaseRequest extends StatefulWidget {
   @override
@@ -70,7 +71,8 @@ class _FloatingButton extends StatelessWidget {
     return FloatingActionButton.extended(
       label: Text('Submit'),
       backgroundColor: colorTheme1,
-      onPressed: () => Navigator.pushNamed(context, routeProcurement),
+      // onPressed: () => Navigator.pushNamed(context, routeProcurement),
+      onPressed: () => Navigator.pop(context),
     );
   }
 }
@@ -90,8 +92,10 @@ class _ListTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.only(bottom:50),
-      separatorBuilder: (ctx, _) => Divider(color: Colors.black38,),
+      padding: EdgeInsets.only(bottom: 50),
+      separatorBuilder: (ctx, _) => Divider(
+        color: Colors.black38,
+      ),
       itemCount: 10,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -112,6 +116,7 @@ class _Material extends StatefulWidget {
 
 class _MaterialState extends State<_Material> {
   final minQuantity = 10;
+  final maxQuantity = 20;
   int quantity = 10;
 
   @override
@@ -125,32 +130,39 @@ class _MaterialState extends State<_Material> {
         ),
       ),
       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        text(value: "Group A  |  SubGroup A", top: 8.0),
-        text(value: "Quantity : 10"),
+        text(value: "Category A  |  Type A", top: 8.0),
+        text(value: "Quantity Order : $quantity"),
       ]),
-      children:[
-       Row(
-        children: <Widget>[
-          IconButton(
+      children: [
+        Row(
+          children: <Widget>[
+            IconButton(
               icon: Icon(Icons.remove, color: Colors.grey),
-              onPressed: () => setState((){
-                if(quantity > minQuantity) quantity--;
-
+              onPressed: () => setState(() {
+                if (quantity > minQuantity)
+                  quantity--;
+                else
+                  Toast.show("Cannot less than MIN order", context);
               }),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              quantity.toString(),
-              style: TextStyle(fontSize: 20),
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.add, color: Colors.grey),
-            onPressed: () => setState(()=> quantity++),
-          ),
-        ],
-      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                quantity.toString(),
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.add, color: Colors.grey),
+              onPressed: () => setState(() {
+                if (maxQuantity > quantity)
+                  quantity++;
+                else
+                  Toast.show("Cannot more than MAX order", context);
+              }),
+            ),
+          ],
+        ),
       ],
     );
   }

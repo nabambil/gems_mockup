@@ -66,21 +66,29 @@ class _AwesomeFABState extends State<AwesomeFAB>
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             matrix(
-                y: _matrixY.value * 5.0,
+                y: _matrixY.value * 7.0,
                 child: container(colorTheme2, "My Dashboard",
                     value: "My Dashboard", icon: Icons.assessment)),
             matrix(
-                y: _matrixY.value * 4.0,
+                y: _matrixY.value * 6.0,
                 child: container(colorTheme2, "My Check Out",
                     value: "My Check Out", icon: Icons.assignment_late)),
             matrix(
-                y: _matrixY.value * 3.0,
+                y: _matrixY.value * 5.0,
                 child: container(colorTheme2, "My Check In",
                     value: "My Check In", icon: Icons.assignment_turned_in)),
             matrix(
-                y: _matrixY.value * 2.0,
+                y: _matrixY.value * 4.0,
                 child: container(colorTheme2, "My Stock",
                     value: "My Stock", icon: Icons.category)),
+            matrix(
+                y: _matrixY.value * 3.0,
+                child: container(colorTheme4, "Threshold Alert",
+                    value: "Threshold", icon: Icons.warning)),
+            matrix(
+                y: _matrixY.value * 2.0,
+                child: container(colorTheme5, "My Task",
+                    value: "My Task", icon: Icons.account_tree_rounded)),
             matrix(
                 y: _fabHeight * 1.0,
                 child: container(colorTheme1, "",

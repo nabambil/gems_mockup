@@ -25,8 +25,9 @@ class BlocInventory extends Bloc {
   Function get setSelected => _selectedFilter.sink.add;
   Function get setView => _myView.sink.add;
 
-  BlocInventory(){
-    _myStock.add(['A','B','C'].map((f) => Stock(group: "Group $f")).toList());
+  BlocInventory() {
+    _myStock
+        .add(['A', 'B', 'C'].map((f) => Stock(group: "Category $f")).toList());
   }
 
   @override
@@ -44,7 +45,7 @@ enum RequestStatus {
   Reserved,
 }
 
-class Material extends Bloc{
+class Material extends Bloc {
   final _controllerThreshold = BehaviorSubject<int>.seeded(10);
   final String issuedBy;
   final String group;
@@ -54,8 +55,10 @@ class Material extends Bloc{
   double price;
   int quantity;
 
-  void get addThreshold => _controllerThreshold.sink.add(_controllerThreshold.value + 1);
-  void get minusThreshold => _controllerThreshold.sink.add(_controllerThreshold.value - 1);
+  void get addThreshold =>
+      _controllerThreshold.sink.add(_controllerThreshold.value + 1);
+  void get minusThreshold =>
+      _controllerThreshold.sink.add(_controllerThreshold.value - 1);
 
   Material({
     @required this.issuedBy,
@@ -75,7 +78,7 @@ class Material extends Bloc{
     if (quantity > 0) quantity -= 1;
   }
 
-  Stream<int> get threshold  => _controllerThreshold.stream;
+  Stream<int> get threshold => _controllerThreshold.stream;
 
   @override
   void dispose() {
@@ -90,11 +93,10 @@ class Stock {
   Stock({@required this.group, subgroups})
       : this.subgroups = subgroups ??
             ['A', 'B', 'C']
-                .map((f) => Group(subgroup: "Sub Group $f", group: group))
+                .map((f) => Group(subgroup: "Type $f", group: group))
                 .toList();
-  
-  String get quantity => subgroups.length.toString();
 
+  String get quantity => subgroups.length.toString();
 }
 
 class Group {

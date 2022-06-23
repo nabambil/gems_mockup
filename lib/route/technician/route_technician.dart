@@ -5,7 +5,8 @@ import 'package:mockup_gems/utils/constant.dart';
 class RouteTechnician extends StatefulWidget {
   final BlocTechnician bloc;
 
-  RouteTechnician({BlocTechnician value}) : this.bloc = value ?? BlocTechnician();
+  RouteTechnician({BlocTechnician value})
+      : this.bloc = value ?? BlocTechnician();
 
   @override
   _RouteTechnicianState createState() => _RouteTechnicianState();
@@ -67,6 +68,7 @@ class _Info extends StatelessWidget {
           children: <TableRow>[
             row("Request Date : ", "02 Mac 2020"),
             row("Request By : ", "Muhammad Zaid"),
+            row("Approved By : ", "Khairul Syafiq"),
             row("WO No : ", "WO0014"),
             row("Priority : ", "High"),
             row("Location : ", "BNM"),

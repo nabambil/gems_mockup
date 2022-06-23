@@ -21,7 +21,10 @@ class _Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text("Muhammad Nabil", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text("Muhammad Nabil",
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        onTap: () => Navigator.pushNamed(context, routeMateralRequest,
+            arguments: "checkout"),
         subtitle:
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           text(value: "Mohd Syafiq", top: 8.0),

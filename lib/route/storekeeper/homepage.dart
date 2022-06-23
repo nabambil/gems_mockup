@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mockup_gems/route/storekeeper/list_checkin.dart';
 import 'package:mockup_gems/route/storekeeper/list_stock.dart';
 import 'package:mockup_gems/route/storekeeper/list_task.dart';
+import 'package:mockup_gems/route/storekeeper/thresholdList.dart';
 import 'package:mockup_gems/utils/bloc/bloc_inventory.dart';
 import 'package:mockup_gems/utils/constant.dart';
 import 'package:mockup_gems/utils/widget/FAB.dart';
@@ -33,8 +34,8 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(_controller, widget.bloc),
-      body: _Body(_controller, widget.bloc),
+      appBar: _AppBar(widget.bloc),
+      body: _Body(widget.bloc),
       floatingActionButton:
           _controller.index == 0 ? _FloatingButton(widget.bloc) : null,
     );
@@ -42,20 +43,22 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
 }
 
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  final TabController _controller;
   final BlocInventory _bloc;
 
-  _AppBar(this._controller, this._bloc);
+  _AppBar(this._bloc);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: new Text("Inventory"),
+      title: StreamBuilder<Object>(
+        stream: _bloc.view$,
+        builder: (ctx, snapshot) =>
+            Tab(text: "Inventory - " + (snapshot.data ?? "")),
+      ),
       backgroundColor: Colors.white,
       centerTitle: true,
       leading: leading,
       actions: <Widget>[_SearchButton(), SizedBox(width: 6)],
-      bottom: bottom,
     );
   }
 
@@ -63,17 +66,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
     return Container(
       child: Image.asset("assets/icon_trans.png", height: 30, width: 30),
       padding: EdgeInsets.all(14),
-    );
-  }
-
-  get bottom {
-    return TabBar(
-      labelColor: colorTheme3,
-      controller: _controller,
-      tabs: <Widget>[
-        specialTab,
-        Tab(text: "My Task"),
-      ],
     );
   }
 
@@ -85,26 +77,29 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(105);
+  Size get preferredSize => Size.fromHeight(60);
 }
 
 class _Body extends StatelessWidget {
-  final TabController _controller;
   final BlocInventory _bloc;
 
-  _Body(this._controller, this._bloc);
+  _Body(this._bloc);
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(controller: _controller, children: [firstTab, secondTab]);
+    return firstTab;
   }
 
   get secondTab {
     return SingleChildScrollView(
-          child: Column(
+      child: Column(
         children: <Widget>[
           _Header(_bloc),
-          Container(width: double.infinity,color: colorTheme3, height: 0.5,),
+          Container(
+            width: double.infinity,
+            color: colorTheme3,
+            height: 0.5,
+          ),
           TaskList(_bloc),
         ],
       ),
@@ -122,8 +117,12 @@ class _Body extends StatelessWidget {
               return CheckInList();
             case "My Check Out":
               return CheckOutList();
-            case "My Dashboard": 
+            case "My Dashboard":
               return MyDashboard();
+            case "Threshold":
+              return ThresholdListView();
+            case "My Task":
+              return secondTab;
             default:
               return Center(child: Text(snapshot.data ?? "My Stock"));
           }
@@ -139,7 +138,7 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,8 +150,7 @@ class _Header extends StatelessWidget {
               children: <Widget>[
                 Icon(Icons.send, color: Colors.white),
                 SizedBox(width: 6),
-                Text("10",
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
+                Text("10", style: TextStyle(color: Colors.white, fontSize: 16)),
               ],
             ),
             color: colorTheme2,
@@ -216,17 +214,18 @@ class _FloatingButton extends StatelessWidget {
             FloatingActionButton(
               heroTag: "Submit",
               child: Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, routeStockIn),
             ),
-          if (snapshot.data == "My Stock")
-            FloatingActionButton(
-              heroTag: "Submit",
-              child: Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, routeRegisterItem);
-              },
-            ),
-          SizedBox(width: 12),
+          if (snapshot.data == "My Check In") SizedBox(width: 12),
+          // if (snapshot.data == "My Stock")
+          //   FloatingActionButton(
+          //     heroTag: "Submit",
+          //     child: Icon(Icons.add),
+          //     onPressed: () {
+          //       Navigator.pushNamed(context, routeRegisterItem);
+          //     },
+          //   ),
+          // SizedBox(width: 12),
           FloatingActionButton(
             heroTag: "FAB",
             child: new Icon(Icons.menu),

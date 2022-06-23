@@ -13,7 +13,10 @@ import 'package:mockup_gems/route/technician/route_technician_detail.dart';
 import 'package:mockup_gems/utils/bloc/bloc_technician.dart';
 import 'package:mockup_gems/utils/constant.dart';
 
-import 'route/storekeeper/dashboard.dart';
+import 'route/attendance/dashboard.dart';
+import 'route/storekeeper/checkin_list.dart';
+import 'route/storekeeper/product_details.dart';
+import 'route/storekeeper/stockIn_list.dart';
 import 'utils/constant.dart';
 
 void main() => runApp(MyApp());
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: generateRoute,
-      initialRoute: routeDashboard,
+      initialRoute: routeAttendance,
       debugShowCheckedModeBanner: false,
     );
   }
@@ -69,6 +72,15 @@ class MyApp extends StatelessWidget {
             builder: (ctx) => MaterialRequest(status: settings.arguments));
       case routeDashboard:
         return CupertinoPageRoute(builder: (ctx) => Homepage());
+      case routeDetails:
+        return CupertinoPageRoute(builder: (ctx) => MaterialDetails());
+      case routeCheckInInfo:
+        return CupertinoPageRoute(
+            builder: (ctx) => CheckinDetails(newUpload: settings.arguments));
+      case routeStockIn:
+        return CupertinoPageRoute(builder: (ctx) => StockInList());
+      case routeAttendance:
+        return CupertinoPageRoute(builder: (ctx) => Dashboard());
       default:
         return CupertinoPageRoute(builder: (ctx) => ProcumentHomepage());
     }

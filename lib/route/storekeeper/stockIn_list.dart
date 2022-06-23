@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mockup_gems/utils/constant.dart';
 
-class CheckInList extends StatelessWidget {
+class StockInList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.only(top: 12, bottom: 50),
-      itemBuilder: (ctx, index) => _Tile("RM100,000.00"),
-      itemCount: 10,
-      separatorBuilder: (ctx, index) => Divider(),
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text("New Check In"),
+          centerTitle: true),
+      body: ListView.separated(
+        padding: EdgeInsets.only(top: 12, bottom: 50),
+        itemBuilder: (ctx, index) => _Tile("RM10,000.00"),
+        itemCount: 2,
+        separatorBuilder: (ctx, index) => Divider(),
+      ),
     );
   }
 }
@@ -23,11 +29,11 @@ class _Tile extends StatelessWidget {
     return ListTile(
         title: Text("RFQ00045", style: TextStyle(fontWeight: FontWeight.bold)),
         onTap: () =>
-            Navigator.pushNamed(context, routeCheckInInfo, arguments: false),
+            Navigator.pushNamed(context, routeCheckInInfo, arguments: true),
         subtitle:
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           text(value: "Mohd Syafiq", top: 8.0),
-          text(value: "2 / 2 / 2020"),
+          text(value: "2 / 5 / 2020"),
           text(value: "PR000312"),
         ]),
         trailing: state);
